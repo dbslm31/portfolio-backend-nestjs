@@ -2,6 +2,8 @@ import { Controller, Get, Post, Put, Delete, Body, Param, UseGuards } from '@nes
 import { UserService } from './user.service';
 import { User } from './user.model';
 import { JwtAuthGuard } from 'src/auth/jwt.guard';
+import { RolesGuard } from 'src/roles/roles.guard';
+import { Roles } from 'src/roles/roles.decorator';
 
 @Controller('users')
 export class UserController {
@@ -13,8 +15,9 @@ export class UserController {
         return this.userService.createUser(body.username, body.email, body.password);
     }
 
-    @UseGuards(JwtAuthGuard)
+    @UseGuards(JwtAuthGuard, RolesGuard)
     @Get()
+    @Roles('admin')
     async findAllUsers(): Promise<Omit<User, 'password'>[]> {
         return this.userService.findAll();
     }

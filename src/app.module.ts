@@ -5,6 +5,7 @@ import { SequelizeModule } from '@nestjs/sequelize';
 import { UserModule } from './user/user.module';
 import { ConfigModule } from '@nestjs/config';
 import { AuthModule } from './auth/auth.module';
+import { RolesModule } from './roles/roles.module';
 
 
 
@@ -23,7 +24,7 @@ import { AuthModule } from './auth/auth.module';
     autoLoadModels: true,
     synchronize: true,
   }),
-    UserModule, AuthModule],
+    UserModule, AuthModule, RolesModule],
   controllers: [AppController],
   providers: [AppService],
 })
