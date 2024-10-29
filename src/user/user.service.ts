@@ -31,15 +31,15 @@ export class UserService {
     }
 
 
-    async findOne(id: string): Promise<User | null> {
+    async findOne(id: number): Promise<User | null> {
         return this.userRepository.findOne(id);
     }
 
-    async updateUser(id: string, data: Partial<User>): Promise<void> {
+    async updateUser(id: number, data: Partial<User>): Promise<void> {
         await this.userRepository.update(id, data);
     }
 
-    async deleteUser(id: string): Promise<void> {
+    async deleteUser(id: number): Promise<void> {
         const user = await this.userRepository.findOne(id);
         if (user) {
             await user.destroy();

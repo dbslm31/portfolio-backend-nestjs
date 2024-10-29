@@ -20,15 +20,15 @@ export class UserRepository {
         return this.userModel.findAll();
     }
 
-    async findOne(id: string): Promise<User | null> {
+    async findOne(id: number): Promise<User | null> {
         return this.userModel.findOne({ where: { id } });
     }
 
-    async update(id: string, data: Partial<User>): Promise<void> {
+    async update(id: number, data: Partial<User>): Promise<void> {
         await this.userModel.update(data, { where: { id } });
     }
 
-    async delete(id: string): Promise<void> {
+    async delete(id: number): Promise<void> {
         const user = await this.findOne(id);
         if (user) {
             await user.destroy();

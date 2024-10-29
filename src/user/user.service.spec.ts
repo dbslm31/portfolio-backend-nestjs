@@ -110,27 +110,27 @@ describe('UserService', () => {
       const user = { id: '1', username: 'user1', email: 'user1@example.com' };
       mockUserRepository.findOne.mockResolvedValue(user);
 
-      const result = await service.findOne('1');
+      const result = await service.findOne(1);
 
       expect(result).toEqual(user);
-      expect(mockUserRepository.findOne).toHaveBeenCalledWith('1');
+      expect(mockUserRepository.findOne).toHaveBeenCalledWith(1);
     });
 
     it('should return null if user does not exist', async () => {
       mockUserRepository.findOne.mockResolvedValue(null);
-      const result = await service.findOne('999');
+      const result = await service.findOne(999);
 
       expect(result).toBeNull();
-      expect(mockUserRepository.findOne).toHaveBeenCalledWith('999');
+      expect(mockUserRepository.findOne).toHaveBeenCalledWith(999);
     });
   });
 
   describe('updateUser', () => {
     it('should update a user', async () => {
       const data = { username: 'updatedUser' };
-      await service.updateUser('1', data);
+      await service.updateUser(1, data);
 
-      expect(mockUserRepository.update).toHaveBeenCalledWith('1', data);
+      expect(mockUserRepository.update).toHaveBeenCalledWith(1, data);
     });
   });
 
@@ -140,7 +140,7 @@ describe('UserService', () => {
       mockUserRepository.findOne.mockResolvedValue(user);
 
 
-      await service.deleteUser('1');
+      await service.deleteUser(1);
 
       expect(user.destroy).toHaveBeenCalled();
     });
@@ -148,8 +148,8 @@ describe('UserService', () => {
     it('should not throw an error if user does not exist', async () => {
       mockUserRepository.findOne.mockResolvedValue(null);
 
-      await expect(service.deleteUser('999')).resolves.toBeUndefined();
-      expect(mockUserRepository.findOne).toHaveBeenCalledWith('999');
+      await expect(service.deleteUser(999)).resolves.toBeUndefined();
+      expect(mockUserRepository.findOne).toHaveBeenCalledWith(999);
     });
   });
 });
