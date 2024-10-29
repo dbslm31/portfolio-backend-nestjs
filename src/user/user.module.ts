@@ -7,12 +7,15 @@ import { UserController } from './user.controller';
 import { UserRepository } from './user.repository';
 import { AuthModule } from 'src/auth/auth.module';
 import { JwtService } from '@nestjs/jwt';
+import { JwtAuthGuard } from 'src/auth/jwt.guard';
+
 
 
 @Module({
-  imports: [SequelizeModule.forFeature([User, Token]), AuthModule
+  imports: [
+    SequelizeModule.forFeature([User, Token]), AuthModule
   ],
-  providers: [UserService, UserRepository, JwtService],
+  providers: [UserService, UserRepository, JwtService, JwtAuthGuard],
   controllers: [UserController],
 })
 export class UserModule { }

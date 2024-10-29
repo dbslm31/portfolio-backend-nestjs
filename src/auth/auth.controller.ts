@@ -1,4 +1,4 @@
-import { Controller, Post, Body, UnauthorizedException } from '@nestjs/common';
+import { Controller, Post, Body, UnauthorizedException, Headers } from '@nestjs/common';
 import { AuthService } from './auth.service';
 
 @Controller('auth')
@@ -12,5 +12,16 @@ export class AuthController {
             throw new UnauthorizedException('Invalid credentials');
         }
         return this.authService.login(user);
+    }
+
+    @Post('logout')
+    async logout(@Headers('authorization') authHeader: string) {
+        const token = authHeader?.split(' ')[1];
+        if (!token) {
+            throw new UnauthorizedException('Token is missing');
+        }
+
+        await this.authService.logout(token);
+        return { message: 'Logged out successfully' };
     }
 }
