@@ -22,17 +22,26 @@ export class UserService {
         return null;
     }
 
-    async findAll(): Promise<Partial<User>[]> {
+    async findAll(): Promise<Omit<User, 'password'>[]> {
         const users = await this.userRepository.findAll();
         return users.map(user => {
-            const { password, ...userWithoutPassword } = user;
-            return userWithoutPassword;
+            const userObj = user.toJSON();
+            delete userObj.password;
+            return userObj;
         });
     }
 
 
-    async findOne(id: number): Promise<User | null> {
-        return this.userRepository.findOne(id);
+
+    async findOne(id: number): Promise<Omit<User, 'password'> | null> {
+        const user = await this.userRepository.findOne(id);
+        if (!user) {
+            return null;
+        }
+
+        const userObj = user.toJSON();
+        delete userObj.password;
+        return userObj;
     }
 
     async updateUser(id: number, data: Partial<User>): Promise<void> {

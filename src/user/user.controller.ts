@@ -15,14 +15,15 @@ export class UserController {
 
     @UseGuards(JwtAuthGuard)
     @Get()
-    async findAllUsers(): Promise<Partial<User>[]> {
+    async findAllUsers(): Promise<Omit<User, 'password'>[]> {
         return this.userService.findAll();
     }
 
 
 
+    @UseGuards(JwtAuthGuard)
     @Get(':id')
-    async findOne(@Param('id') id: number): Promise<User> {
+    async findOne(@Param('id') id: number): Promise<Omit<User, 'password'> | null> {
         return this.userService.findOne(id);
     }
 
