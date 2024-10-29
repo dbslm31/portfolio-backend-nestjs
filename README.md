@@ -53,11 +53,11 @@ To install the project, follow these steps:
 
 2. Navigate to the project directory:
    ```bash
-cd user-management-system```
+   cd user-management-system```
 
 3. Install the dependencies:
    ```bash
-npm install```
+   npm install```
 
 
 ## Usage
