@@ -59,12 +59,13 @@ To install the project, follow these steps:
    ```bash
    npm install
 
+   4. Create a `.env` file in the root directory and configure your environment variables.
+
 
 ## Usage
 To start the application, run:
 ```bash
-npm run start:dev```
-4. Create a `.env` file in the root directory and configure your environment variables.
+   npm run start:dev
 
-The application will be running on http://localhost:3000 by default.
+The application will be running on `http://localhost:3000` by default.
 
