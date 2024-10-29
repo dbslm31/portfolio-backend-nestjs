@@ -30,6 +30,7 @@ export class User extends Model<User> {
     })
     password: string;
 
+
     @ForeignKey(() => Role)
     @Column
     roleId: number;

@@ -12,9 +12,10 @@ export class UserRepository {
     }
 
 
-    async findByEmail(email: string): Promise<User | null> {
-        return this.userModel.findOne({ where: { email } });
+    async findByEmail(email: string, options?: any): Promise<User | null> {
+        return this.userModel.findOne({ where: { email }, ...options });
     }
+
 
     async findAll(): Promise<User[]> {
         return this.userModel.findAll();

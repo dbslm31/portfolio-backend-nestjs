@@ -18,12 +18,12 @@ export class AuthController {
 
         const { access_token } = await this.authService.login(user);
 
-        // Envoyer le token dans un cookie HttpOnly
+
         res.cookie('jwt', access_token, {
-            httpOnly: true,      // Protège le cookie contre l'accès JavaScript
-            secure: process.env.NODE_ENV === 'production', // true en production, false en développement
-            sameSite: 'strict',  // Bloque les envois entre sites
-            maxAge: 1800 * 1000  // Durée de vie du cookie (30 minutes ici)
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: 'strict',
+            maxAge: 1800 * 1000
         });
 
         return res.send({ message: 'Login successful' });
@@ -34,9 +34,9 @@ export class AuthController {
         // Supprimer le cookie contenant le token JWT
         response.cookie('jwt', '', {
             httpOnly: true,
-            secure: process.env.NODE_ENV === 'production', // true en production, false en développement
+            secure: process.env.NODE_ENV === 'production',
             sameSite: 'strict',
-            expires: new Date(0) // Définir la date d'expiration à une date passée
+            expires: new Date(0)
         });
 
         return { message: 'Logged out successfully' };

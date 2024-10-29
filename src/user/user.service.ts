@@ -1,11 +1,13 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectModel } from '@nestjs/sequelize';
 import * as bcrypt from 'bcrypt';
 import { UserRepository } from './user.repository';
 import { User } from './user.model';
+import { Role } from 'src/roles/roles.model';
 
 @Injectable()
 export class UserService {
-    constructor(private readonly userRepository: UserRepository) { }
+    constructor(private readonly userRepository: UserRepository, @InjectModel(Role) private readonly roleModel: typeof Role,) { }
 
     async createUser(username: string, email: string, password: string): Promise<User> {
         const saltRounds = 10;
@@ -15,12 +17,30 @@ export class UserService {
 
 
     async validateUser(email: string, password: string): Promise<User | null> {
-        const user = await this.userRepository.findByEmail(email);
+        const user = await this.userRepository.findByEmail(email, { include: [Role] });
         if (user && await bcrypt.compare(password, user.password)) {
             return user;
         }
         return null;
     }
+
+    async assignRole(userId: number, roleId: number): Promise<User> {
+        const user = await this.userRepository.findOne(userId);
+        if (!user) {
+            throw new NotFoundException('User not found');
+        }
+
+        const role = await this.roleModel.findByPk(roleId);
+        if (!role) {
+            throw new NotFoundException('Role not found');
+        }
+
+        user.roleId = roleId;
+        await user.save();
+
+        return user;
+    }
+
 
     async findAll(): Promise<Omit<User, 'password'>[]> {
         const users = await this.userRepository.findAll();

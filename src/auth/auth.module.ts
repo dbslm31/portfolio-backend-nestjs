@@ -10,17 +10,20 @@ import { JwtAuthGuard } from './jwt.guard';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { User } from '../user/user.model';
 import { Token } from './token.model';
+import { Role } from 'src/roles/roles.model';
+import { RolesService } from 'src/roles/roles.service';
+import { RolesRepository } from 'src/roles/roles.repository';
 
 @Module({
     imports: [ConfigModule.forRoot(),
-    SequelizeModule.forFeature([User, Token]),
+    SequelizeModule.forFeature([User, Token, Role]),
     JwtModule.register({
         secret: process.env.JWT_SECRET_KEY,
         signOptions: { expiresIn: '1800s' },
     })
 
     ],
-    providers: [AuthService, UserService, JwtStrategy, UserRepository, JwtAuthGuard],
+    providers: [AuthService, UserService, JwtStrategy, UserRepository, JwtAuthGuard, RolesService, RolesRepository],
     controllers: [AuthController],
 })
 
