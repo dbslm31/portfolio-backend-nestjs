@@ -49,15 +49,15 @@ To install the project, follow these steps:
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/user-management-system.git```
+   git clone https://github.com/yourusername/user-management-system.git
 
 2. Navigate to the project directory:
    ```bash
-   cd user-management-system```
+   cd user-management-system
 
 3. Install the dependencies:
    ```bash
-   npm install```
+   npm install
 
 
 ## Usage
