@@ -49,7 +49,7 @@ To install the project, follow these steps:
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/dbslm31/user-management-system.git
+   git clone https://github.com/dbslm31/user-roles-management-nestjs.git
 
 2. Navigate to the project directory:
    ```bash
