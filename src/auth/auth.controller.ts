@@ -1,5 +1,6 @@
-import { Controller, Post, Body, Res, UnauthorizedException } from '@nestjs/common';
+import { Controller, Post, Get, Body, Res, Req, UnauthorizedException, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
+import { AuthGuard } from '@nestjs/passport';
 import { Response } from 'express';
 
 @Controller('auth')
@@ -41,4 +42,35 @@ export class AuthController {
 
         return { message: 'Logged out successfully' };
     }
+
+    @Get('google')
+    @UseGuards(AuthGuard('google'))
+    async googleAuth() {
+        // Ce point de terminaison est utilisé uniquement pour initier la redirection vers Google.
+    }
+
+    @Get('google/callback')
+    @UseGuards(AuthGuard('google'))
+    async googleAuthRedirect(@Req() req, @Res() res: Response) {
+        const { user, access_token } = req.user as any;
+
+        if (!access_token) {
+            console.error('Access token is undefined.');
+            throw new UnauthorizedException('Token is missing or undefined.');
+        }
+
+        res.cookie('jwt', access_token, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: 'lax',
+            maxAge: 1800 * 1000,
+        });
+
+        return res.redirect('http://localhost:3000/users/dashboard');
+    }
+
+
 }
+
+
+

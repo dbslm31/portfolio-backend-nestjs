@@ -32,4 +32,18 @@ export class AuthService {
     async logout(token: string) {
         await Token.destroy({ where: { token } });
     }
+
+    generateToken(payload: any): string {
+        return this.jwtService.sign(payload);
+    }
+
+    async storeToken(token: string, userId: number): Promise<void> {
+        await Token.create({
+            token,
+            userId,
+            expiresAt: new Date(Date.now() + 1800 * 1000),
+        });
+    }
+
+
 }

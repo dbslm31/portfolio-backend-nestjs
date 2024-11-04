@@ -9,10 +9,16 @@ import { Roles } from 'src/roles/roles.decorator';
 export class UserController {
     constructor(private readonly userService: UserService) { }
 
-
     @Post()
     async createUser(@Body() body: { username: string; email: string; password: string }): Promise<User> {
         return this.userService.createUser(body.username, body.email, body.password);
+    }
+
+    @UseGuards(JwtAuthGuard, RolesGuard)
+    @Get('dashboard')
+    @Roles('client')
+    async displayDashboard(): Promise<string> {
+        return 'Welcome to your dashboard!';
     }
 
     @UseGuards(JwtAuthGuard, RolesGuard)
@@ -24,7 +30,7 @@ export class UserController {
 
     @UseGuards(JwtAuthGuard)
     @Get(':id')
-    async findOne(@Param('id') id: number): Promise<Omit<User, 'password'> | null> {
+    async findOne(@Param('id', ParseIntPipe) id: number): Promise<Omit<User, 'password'> | null> {
         return this.userService.findOne(id);
     }
 
@@ -40,7 +46,7 @@ export class UserController {
         @Body('roleId', ParseIntPipe) roleId: number
     ) {
         try {
-            console.log('roleId', roleId)
+            console.log('roleId', roleId);
             const user = await this.userService.assignRole(userId, roleId);
             return { message: 'Role assigned successfully', user };
         } catch (error) {
