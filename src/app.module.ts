@@ -7,6 +7,9 @@ import { ConfigModule } from '@nestjs/config';
 import { AuthModule } from './auth/auth.module';
 import { RolesModule } from './roles/roles.module';
 import { ProjectsModule } from './projects/projects.module';
+import { TagsModule } from './tags/tags.module';
+import { ProjectsTagsModule } from './projects_tags/projects_tags.module';
+
 
 
 
@@ -25,7 +28,7 @@ import { ProjectsModule } from './projects/projects.module';
     autoLoadModels: true,
     synchronize: true,
   }),
-    UserModule, AuthModule, RolesModule, ProjectsModule],
+    UserModule, AuthModule, RolesModule, ProjectsModule, TagsModule, ProjectsTagsModule],
   controllers: [AppController],
   providers: [AppService],
 })

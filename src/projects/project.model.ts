@@ -1,5 +1,7 @@
-import { Table, Column, Model, DataType, ForeignKey, BelongsTo } from 'sequelize-typescript';
+import { Table, Column, Model, DataType, ForeignKey, BelongsTo, BelongsToMany } from 'sequelize-typescript';
 import { User } from 'src/user/user.model';
+import { ProjectTag } from 'src/projects_tags/projects_tags.model';
+import { Tag } from 'src/tags/tags.model';
 
 @Table
 export class Project extends Model<Project> {
@@ -63,4 +65,9 @@ export class Project extends Model<Project> {
         defaultValue: false,
     })
     isCompleted: boolean;
+
+    @BelongsToMany(() => Tag, () => ProjectTag)
+    tags: Tag[];
 }
+
+
