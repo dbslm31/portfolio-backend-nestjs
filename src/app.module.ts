@@ -6,6 +6,7 @@ import { UserModule } from './user/user.module';
 import { ConfigModule } from '@nestjs/config';
 import { AuthModule } from './auth/auth.module';
 import { RolesModule } from './roles/roles.module';
+import { ProjectsModule } from './projects/projects.module';
 
 
 
@@ -24,7 +25,7 @@ import { RolesModule } from './roles/roles.module';
     autoLoadModels: true,
     synchronize: true,
   }),
-    UserModule, AuthModule, RolesModule],
+    UserModule, AuthModule, RolesModule, ProjectsModule],
   controllers: [AppController],
   providers: [AppService],
 })

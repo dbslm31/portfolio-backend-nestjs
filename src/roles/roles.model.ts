@@ -1,4 +1,3 @@
-// role.entity.ts
 import { Column, Model, Table, HasMany } from 'sequelize-typescript';
 import { User } from '../user/user.model';
 

@@ -17,5 +17,10 @@
     "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false
-  }
+  },
+  "include": [
+    "migrations/**/*.ts",
+    "src/**/*.ts",
+    "migrations/20241125111957-create-user.js",
+  ]
 }
